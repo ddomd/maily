@@ -12,7 +12,7 @@ import (
 
 
 func (cfg *Server) GetEmail(ctx context.Context, req *pb.GetEmailRequest) (*pb.EmailResponse, error) {
-	email, err := cfg.DB.GetEmail(req.EmailAddress)
+	email, err := cfg.DB.GetEmail(req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (cfg *Server) CreateEmail(ctx context.Context, req *pb.CreateEmailRequest) 
 }
 
 func (cfg *Server) UpdateEmail(ctx context.Context, req *pb.UpdateEmailRequest) (*pb.EmailResponse, error) {
-	email, err := cfg.DB.UpdateEmail(req.EmailAddress, req.OptOut)
+	email, err := cfg.DB.UpdateEmail(req.Id, req.OptOut)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (cfg *Server) UpdateEmail(ctx context.Context, req *pb.UpdateEmailRequest) 
 }
 
 func (cfg *Server) DeleteEmail(ctx context.Context, req *pb.DeleteEmailRequest) (*pb.EmailResponse, error) {
-	email, err := cfg.DB.DeleteEmail(req.EmailAddress)
+	email, err := cfg.DB.DeleteEmail(req.Id)
 	if err != nil {
 		return nil, err
 	}

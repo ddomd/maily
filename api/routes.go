@@ -23,12 +23,12 @@ func (s *Server) registerRoutes() {
 	
 	router.Mount("/rest", restRouter)
 	
+	restRouter.Get("/get/{id}", s.HandleGetEmail)
 	restRouter.Get("/batch/{limit}&{offset}", s.HandleGetBatchEmail)
-	restRouter.Get("/get", s.HandleGetEmail)
 	
 	restRouter.Post("/create", s.HandleCreateEmail)
-	restRouter.Put("/update", s.HandleUpdateEmail)
-	restRouter.Delete("/delete", s.HandleDeleteEmail)
+	restRouter.Put("/update/{id}", s.HandleUpdateEmail)
+	restRouter.Delete("/delete/{id}", s.HandleDeleteEmail)
 
 	s.Router = router
 }

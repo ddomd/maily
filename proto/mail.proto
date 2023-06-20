@@ -12,10 +12,10 @@ message Email {
 } 
 
 message CreateEmailRequest { string email_address = 1; }
-message GetEmailRequest { string email_address = 1; }
+message GetEmailRequest { int64 id = 1; }
 message GetEmailBatchRequest { int32 limit = 1;int32 offset = 2; }
-message UpdateEmailRequest { string email_address = 1; bool opt_out = 2; }
-message DeleteEmailRequest { string email_address = 1; }
+message UpdateEmailRequest { int64 id = 1; bool opt_out = 2; }
+message DeleteEmailRequest { int64 id = 1; }
 
 message EmailResponse { optional Email email = 1; }
 message EmailBatchResponse { repeated Email emails = 1; }

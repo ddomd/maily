@@ -24,12 +24,12 @@ func (mdb *MDB) CreateEmail(address string) (Email, error){
 	return createdEmail, nil
 }
 
-func (mdb *MDB) GetEmail(address string) (Email, error) {
+func (mdb *MDB) GetEmail(id int64) (Email, error) {
 	emailRow := mdb.DB.QueryRow(`
 		SELECT *
 		FROM emails
-		WHERE email = ?;
-	`, address)
+		WHERE id = ?;
+	`, id)
 
 	foundEmail, err := scanRow(emailRow)
 	if err != nil {
@@ -66,16 +66,16 @@ func (mdb *MDB) GetBatchEmails(params BatchParams) ([]Email, error) {
 	return emails, nil
 }
 
-func (mdb *MDB) UpdateEmail(email string, optOut bool) (Email, error) {
+func (mdb *MDB) UpdateEmail(id int64, optOut bool) (Email, error) {
 	currentTime := time.Now().Unix()
 
 	result := mdb.DB.QueryRow(`
 		UPDATE emails
 		SET confirmed_at=?,
 				opt_out=?
-		WHERE email=?
+		WHERE id=?
 		RETURNING *;
-	`, currentTime, optOut, email)
+	`, currentTime, optOut, id)
 	
 	updatedEmail, err := scanRow(result)
 	if err != nil {
@@ -85,13 +85,12 @@ func (mdb *MDB) UpdateEmail(email string, optOut bool) (Email, error) {
 	return updatedEmail, nil
 }
 
-func (mdb *MDB) DeleteEmail(email string) (Email, error) {
+func (mdb *MDB) DeleteEmail(id int64) (Email, error) {
 	result := mdb.DB.QueryRow(`
-		UPDATE emails
-		SET opt_out=true
-		WHERE email=?
+		DELETE FROM emails
+		WHERE id=?
 		RETURNING *;
-	`, email)
+	`, id)
 	
 	deletedEmail, err := scanRow(result)
 	if err != nil {

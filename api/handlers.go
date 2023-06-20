@@ -72,19 +72,15 @@ func (s *Server) HandleGetBatchEmail(rw http.ResponseWriter, req *http.Request) 
 }
 
 func (s *Server) HandleGetEmail(rw http.ResponseWriter, req *http.Request) {
-	type Params struct {
-		EmailAddress string `json:"email_address"`
-	}
+	idParam := chi.URLParam(req, "id")
 
-	params := Params{}
-
-	err := json.NewDecoder(req.Body).Decode(&params)
+	id, err := strconv.Atoi(idParam)
 	if err != nil {
-		utils.RespondWithError(rw, http.StatusInternalServerError, "Couldn't decode params")
+		utils.RespondWithError(rw, http.StatusBadRequest, "id is not a number")
 		return
 	}
 
-	email, err := s.DB.GetEmail(params.EmailAddress)
+	email, err := s.DB.GetEmail(int64(id))
 	if err != nil {
 		utils.RespondWithError(rw, http.StatusInternalServerError, "Entry not found")
 		return
@@ -98,19 +94,26 @@ func (s *Server) HandleGetEmail(rw http.ResponseWriter, req *http.Request) {
 
 func (s *Server) HandleUpdateEmail(rw http.ResponseWriter, req *http.Request) {
 	type Params struct {
-		EmailAddress       string     `json:"email_address"`
-		OptOut      bool       `json:"opt_out"`
+		OptOut bool `json:"opt_out"`
+	}
+
+	idParam := chi.URLParam(req, "id")
+
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		utils.RespondWithError(rw, http.StatusBadRequest, "id is not a number")
+		return
 	}
 
 	params := Params{}
 
-	err := json.NewDecoder(req.Body).Decode(&params)
+	err = json.NewDecoder(req.Body).Decode(&params)
 	if err != nil {
 		utils.RespondWithError(rw, http.StatusInternalServerError, "Couldn't decode params")
 		return
 	}
 
-	email, err := s.DB.UpdateEmail(params.EmailAddress, params.OptOut)
+	email, err := s.DB.UpdateEmail(int64(id), params.OptOut)
 	if err != nil {
 		utils.RespondWithError(rw, http.StatusInternalServerError, err.Error())
 		return
@@ -123,19 +126,15 @@ func (s *Server) HandleUpdateEmail(rw http.ResponseWriter, req *http.Request) {
 }
 
 func (s *Server) HandleDeleteEmail(rw http.ResponseWriter, req *http.Request) {
-	type Params struct {
-		EmailAddress string `json:"email_address"`
-	}
+	idParam := chi.URLParam(req, "id")
 
-	params := Params{}
-
-	err := json.NewDecoder(req.Body).Decode(&params)
+	id, err := strconv.Atoi(idParam)
 	if err != nil {
-		utils.RespondWithError(rw, http.StatusInternalServerError, "Couldn't decode params")
+		utils.RespondWithError(rw, http.StatusBadRequest, "id is not a number")
 		return
 	}
 
-	email, err := s.DB.DeleteEmail(params.EmailAddress)
+	email, err := s.DB.DeleteEmail(int64(id))
 	if err != nil {
 		utils.RespondWithError(rw, http.StatusInternalServerError, err.Error())
 		return

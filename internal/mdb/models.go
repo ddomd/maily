@@ -4,7 +4,7 @@ import "time"
 
 type Email struct {
 	ID          int64
-	Address       string
+	Address     string
 	ConfirmedAt time.Time
 	OptOut      bool
 }
