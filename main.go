@@ -23,6 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to open database: %s\n", err.Error())
 	}
+	defer db.Close()
 
 	mdb := mdb.NewMdb(db)
 
