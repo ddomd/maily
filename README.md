@@ -1,21 +1,31 @@
 # 📨 Maily
 
+A GRPC/REST mailing list management micorservice.
+
 <br>
 
 ## Description
 
-Maily is a simple GRPC/REST mailing list management micorservice created to learn more about google's GRPC protocol.
+Maily was created as a simple project to learn more about google's GRPC protocol implementation.
+The service serves both legacy JSON via REST and protocol buffers via GRPC and supports server reflection.
 
+Configuration options are loaded from an environment file with structure:
 
-## Schema
+```
+JSON_PORT=":{port}"
+GRPC_PORT=":{port}"
+DBPATH="/path/to/db"
+```
 
-The service serves 10 REST endpoints and 10 RPC.
+## Schema 
+
 
 ### REST:
 
 | METHOD | ROUTE                                              | JSON PAYLOAD                               | ACTION                                                                      |
 | ------ | -------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------- |
 | GET    | /rest/get/{id}                                     | {}                                         | Returns a single email entry                                                |
+| ------ | -------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------- |
 | GET    | /rest/all                                          | {}                                         | Returns all email entries                                                   |
 | GET    | /rest/subs                                         | {}                                         | Returns all subscribed email entries                                        |
 | GET    | /rest/batch/limit={int}&offset={int}               | {}                                         | Returns a batch of email entries                                            |
