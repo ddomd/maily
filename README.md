@@ -24,7 +24,7 @@ The service serves 10 REST endpoints and 10 RPC.
 | PUT    | /rest/update/{id}                                  | { "opt_out": bool }                        | Updates the subscription status of a single entry                           |
 | DELETE | /rest/delete/{id}                                  | {}                                         | Deletes a single email entry                                                |
 | DELETE | /rest/delete_unsub                                 | {}                                         | Deletes all unsubscribed email entries                                      |
-| DELETE | /rest/delete_before                                | { "date": int(unix time) }                 | Deletes all email entries confirmed unsubscribed before a given date        |
+| DELETE | /rest/delete_before                                | { "date": int(unix time) }                 | Deletes all email entries that unsubscribed before a given date             |
 
 ### GRPC:
 
@@ -39,4 +39,4 @@ The service serves 10 REST endpoints and 10 RPC.
 | UpdateEmail                   | { "id": int64, "opt_out": bool }                              | Updates the subscription status of a single entry                           |
 | DeleteEmail                   | { "id": int64 }                                               | Deletes a single email entry                                                |
 | DeleteUnsubscribed            | {}                                                            | Deletes all unsubscribed email entries                                      |
-| DeleteUnsubscribedBefore      | { "date": int64(unix time) }                                  | Deletes all email entries confirmed unsubscribed before a given date        |
+| DeleteUnsubscribedBefore      | { "date": int64(unix time) }                                  | Deletes all email entries that unsubscribed before a given date             |
