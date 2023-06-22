@@ -19,237 +19,422 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MailyService_CreateEmail_FullMethodName    = "/proto.MailyService/CreateEmail"
-	MailyService_GetEmail_FullMethodName       = "/proto.MailyService/GetEmail"
-	MailyService_GetBatchEmails_FullMethodName = "/proto.MailyService/GetBatchEmails"
-	MailyService_UpdateEmail_FullMethodName    = "/proto.MailyService/UpdateEmail"
-	MailyService_DeleteEmail_FullMethodName    = "/proto.MailyService/DeleteEmail"
+	Manage_CreateEmail_FullMethodName             = "/proto.Manage/CreateEmail"
+	Manage_GetEmail_FullMethodName                = "/proto.Manage/GetEmail"
+	Manage_GetAll_FullMethodName                  = "/proto.Manage/GetAll"
+	Manage_GetAllSubscribed_FullMethodName        = "/proto.Manage/GetAllSubscribed"
+	Manage_GetBatchSubscribed_FullMethodName      = "/proto.Manage/GetBatchSubscribed"
+	Manage_GetBatch_FullMethodName                = "/proto.Manage/GetBatch"
+	Manage_UpdateEmail_FullMethodName             = "/proto.Manage/UpdateEmail"
+	Manage_DeleteEmail_FullMethodName             = "/proto.Manage/DeleteEmail"
+	Manage_DeleteUnsubscribed_FullMethodName      = "/proto.Manage/DeleteUnsubscribed"
+	Manage_DeleteUsubscribedBefore_FullMethodName = "/proto.Manage/DeleteUsubscribedBefore"
 )
 
-// MailyServiceClient is the client API for MailyService service.
+// ManageClient is the client API for Manage service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MailyServiceClient interface {
+type ManageClient interface {
 	CreateEmail(ctx context.Context, in *CreateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error)
 	GetEmail(ctx context.Context, in *GetEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error)
-	GetBatchEmails(ctx context.Context, in *GetEmailBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
+	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
+	GetAllSubscribed(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
+	GetBatchSubscribed(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
+	GetBatch(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
 	UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error)
 	DeleteEmail(ctx context.Context, in *DeleteEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error)
+	DeleteUnsubscribed(ctx context.Context, in *DeleteUnsubscribedRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
+	DeleteUsubscribedBefore(ctx context.Context, in *DeleteUnsubscribedBeforeRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error)
 }
 
-type mailyServiceClient struct {
+type manageClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMailyServiceClient(cc grpc.ClientConnInterface) MailyServiceClient {
-	return &mailyServiceClient{cc}
+func NewManageClient(cc grpc.ClientConnInterface) ManageClient {
+	return &manageClient{cc}
 }
 
-func (c *mailyServiceClient) CreateEmail(ctx context.Context, in *CreateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
+func (c *manageClient) CreateEmail(ctx context.Context, in *CreateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
 	out := new(EmailResponse)
-	err := c.cc.Invoke(ctx, MailyService_CreateEmail_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Manage_CreateEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mailyServiceClient) GetEmail(ctx context.Context, in *GetEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
+func (c *manageClient) GetEmail(ctx context.Context, in *GetEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
 	out := new(EmailResponse)
-	err := c.cc.Invoke(ctx, MailyService_GetEmail_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Manage_GetEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mailyServiceClient) GetBatchEmails(ctx context.Context, in *GetEmailBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+func (c *manageClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
 	out := new(EmailBatchResponse)
-	err := c.cc.Invoke(ctx, MailyService_GetBatchEmails_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Manage_GetAll_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mailyServiceClient) UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
+func (c *manageClient) GetAllSubscribed(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+	out := new(EmailBatchResponse)
+	err := c.cc.Invoke(ctx, Manage_GetAllSubscribed_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageClient) GetBatchSubscribed(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+	out := new(EmailBatchResponse)
+	err := c.cc.Invoke(ctx, Manage_GetBatchSubscribed_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageClient) GetBatch(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+	out := new(EmailBatchResponse)
+	err := c.cc.Invoke(ctx, Manage_GetBatch_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageClient) UpdateEmail(ctx context.Context, in *UpdateEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
 	out := new(EmailResponse)
-	err := c.cc.Invoke(ctx, MailyService_UpdateEmail_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Manage_UpdateEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mailyServiceClient) DeleteEmail(ctx context.Context, in *DeleteEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
+func (c *manageClient) DeleteEmail(ctx context.Context, in *DeleteEmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
 	out := new(EmailResponse)
-	err := c.cc.Invoke(ctx, MailyService_DeleteEmail_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Manage_DeleteEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// MailyServiceServer is the server API for MailyService service.
-// All implementations must embed UnimplementedMailyServiceServer
+func (c *manageClient) DeleteUnsubscribed(ctx context.Context, in *DeleteUnsubscribedRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+	out := new(EmailBatchResponse)
+	err := c.cc.Invoke(ctx, Manage_DeleteUnsubscribed_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageClient) DeleteUsubscribedBefore(ctx context.Context, in *DeleteUnsubscribedBeforeRequest, opts ...grpc.CallOption) (*EmailBatchResponse, error) {
+	out := new(EmailBatchResponse)
+	err := c.cc.Invoke(ctx, Manage_DeleteUsubscribedBefore_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ManageServer is the server API for Manage service.
+// All implementations must embed UnimplementedManageServer
 // for forward compatibility
-type MailyServiceServer interface {
+type ManageServer interface {
 	CreateEmail(context.Context, *CreateEmailRequest) (*EmailResponse, error)
 	GetEmail(context.Context, *GetEmailRequest) (*EmailResponse, error)
-	GetBatchEmails(context.Context, *GetEmailBatchRequest) (*EmailBatchResponse, error)
+	GetAll(context.Context, *GetAllRequest) (*EmailBatchResponse, error)
+	GetAllSubscribed(context.Context, *GetAllRequest) (*EmailBatchResponse, error)
+	GetBatchSubscribed(context.Context, *GetBatchRequest) (*EmailBatchResponse, error)
+	GetBatch(context.Context, *GetBatchRequest) (*EmailBatchResponse, error)
 	UpdateEmail(context.Context, *UpdateEmailRequest) (*EmailResponse, error)
 	DeleteEmail(context.Context, *DeleteEmailRequest) (*EmailResponse, error)
-	mustEmbedUnimplementedMailyServiceServer()
+	DeleteUnsubscribed(context.Context, *DeleteUnsubscribedRequest) (*EmailBatchResponse, error)
+	DeleteUsubscribedBefore(context.Context, *DeleteUnsubscribedBeforeRequest) (*EmailBatchResponse, error)
+	mustEmbedUnimplementedManageServer()
 }
 
-// UnimplementedMailyServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedMailyServiceServer struct {
+// UnimplementedManageServer must be embedded to have forward compatible implementations.
+type UnimplementedManageServer struct {
 }
 
-func (UnimplementedMailyServiceServer) CreateEmail(context.Context, *CreateEmailRequest) (*EmailResponse, error) {
+func (UnimplementedManageServer) CreateEmail(context.Context, *CreateEmailRequest) (*EmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEmail not implemented")
 }
-func (UnimplementedMailyServiceServer) GetEmail(context.Context, *GetEmailRequest) (*EmailResponse, error) {
+func (UnimplementedManageServer) GetEmail(context.Context, *GetEmailRequest) (*EmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEmail not implemented")
 }
-func (UnimplementedMailyServiceServer) GetBatchEmails(context.Context, *GetEmailBatchRequest) (*EmailBatchResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBatchEmails not implemented")
+func (UnimplementedManageServer) GetAll(context.Context, *GetAllRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
-func (UnimplementedMailyServiceServer) UpdateEmail(context.Context, *UpdateEmailRequest) (*EmailResponse, error) {
+func (UnimplementedManageServer) GetAllSubscribed(context.Context, *GetAllRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllSubscribed not implemented")
+}
+func (UnimplementedManageServer) GetBatchSubscribed(context.Context, *GetBatchRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBatchSubscribed not implemented")
+}
+func (UnimplementedManageServer) GetBatch(context.Context, *GetBatchRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBatch not implemented")
+}
+func (UnimplementedManageServer) UpdateEmail(context.Context, *UpdateEmailRequest) (*EmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmail not implemented")
 }
-func (UnimplementedMailyServiceServer) DeleteEmail(context.Context, *DeleteEmailRequest) (*EmailResponse, error) {
+func (UnimplementedManageServer) DeleteEmail(context.Context, *DeleteEmailRequest) (*EmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteEmail not implemented")
 }
-func (UnimplementedMailyServiceServer) mustEmbedUnimplementedMailyServiceServer() {}
+func (UnimplementedManageServer) DeleteUnsubscribed(context.Context, *DeleteUnsubscribedRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUnsubscribed not implemented")
+}
+func (UnimplementedManageServer) DeleteUsubscribedBefore(context.Context, *DeleteUnsubscribedBeforeRequest) (*EmailBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUsubscribedBefore not implemented")
+}
+func (UnimplementedManageServer) mustEmbedUnimplementedManageServer() {}
 
-// UnsafeMailyServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MailyServiceServer will
+// UnsafeManageServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ManageServer will
 // result in compilation errors.
-type UnsafeMailyServiceServer interface {
-	mustEmbedUnimplementedMailyServiceServer()
+type UnsafeManageServer interface {
+	mustEmbedUnimplementedManageServer()
 }
 
-func RegisterMailyServiceServer(s grpc.ServiceRegistrar, srv MailyServiceServer) {
-	s.RegisterService(&MailyService_ServiceDesc, srv)
+func RegisterManageServer(s grpc.ServiceRegistrar, srv ManageServer) {
+	s.RegisterService(&Manage_ServiceDesc, srv)
 }
 
-func _MailyService_CreateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Manage_CreateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailyServiceServer).CreateEmail(ctx, in)
+		return srv.(ManageServer).CreateEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailyService_CreateEmail_FullMethodName,
+		FullMethod: Manage_CreateEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailyServiceServer).CreateEmail(ctx, req.(*CreateEmailRequest))
+		return srv.(ManageServer).CreateEmail(ctx, req.(*CreateEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MailyService_GetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Manage_GetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailyServiceServer).GetEmail(ctx, in)
+		return srv.(ManageServer).GetEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailyService_GetEmail_FullMethodName,
+		FullMethod: Manage_GetEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailyServiceServer).GetEmail(ctx, req.(*GetEmailRequest))
+		return srv.(ManageServer).GetEmail(ctx, req.(*GetEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MailyService_GetBatchEmails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetEmailBatchRequest)
+func _Manage_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailyServiceServer).GetBatchEmails(ctx, in)
+		return srv.(ManageServer).GetAll(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailyService_GetBatchEmails_FullMethodName,
+		FullMethod: Manage_GetAll_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailyServiceServer).GetBatchEmails(ctx, req.(*GetEmailBatchRequest))
+		return srv.(ManageServer).GetAll(ctx, req.(*GetAllRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MailyService_UpdateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Manage_GetAllSubscribed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageServer).GetAllSubscribed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Manage_GetAllSubscribed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageServer).GetAllSubscribed(ctx, req.(*GetAllRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Manage_GetBatchSubscribed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageServer).GetBatchSubscribed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Manage_GetBatchSubscribed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageServer).GetBatchSubscribed(ctx, req.(*GetBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Manage_GetBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageServer).GetBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Manage_GetBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageServer).GetBatch(ctx, req.(*GetBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Manage_UpdateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailyServiceServer).UpdateEmail(ctx, in)
+		return srv.(ManageServer).UpdateEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailyService_UpdateEmail_FullMethodName,
+		FullMethod: Manage_UpdateEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailyServiceServer).UpdateEmail(ctx, req.(*UpdateEmailRequest))
+		return srv.(ManageServer).UpdateEmail(ctx, req.(*UpdateEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MailyService_DeleteEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Manage_DeleteEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailyServiceServer).DeleteEmail(ctx, in)
+		return srv.(ManageServer).DeleteEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailyService_DeleteEmail_FullMethodName,
+		FullMethod: Manage_DeleteEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailyServiceServer).DeleteEmail(ctx, req.(*DeleteEmailRequest))
+		return srv.(ManageServer).DeleteEmail(ctx, req.(*DeleteEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// MailyService_ServiceDesc is the grpc.ServiceDesc for MailyService service.
+func _Manage_DeleteUnsubscribed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUnsubscribedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageServer).DeleteUnsubscribed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Manage_DeleteUnsubscribed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageServer).DeleteUnsubscribed(ctx, req.(*DeleteUnsubscribedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Manage_DeleteUsubscribedBefore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUnsubscribedBeforeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageServer).DeleteUsubscribedBefore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Manage_DeleteUsubscribedBefore_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageServer).DeleteUsubscribedBefore(ctx, req.(*DeleteUnsubscribedBeforeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Manage_ServiceDesc is the grpc.ServiceDesc for Manage service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var MailyService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.MailyService",
-	HandlerType: (*MailyServiceServer)(nil),
+var Manage_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.Manage",
+	HandlerType: (*ManageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateEmail",
-			Handler:    _MailyService_CreateEmail_Handler,
+			Handler:    _Manage_CreateEmail_Handler,
 		},
 		{
 			MethodName: "GetEmail",
-			Handler:    _MailyService_GetEmail_Handler,
+			Handler:    _Manage_GetEmail_Handler,
 		},
 		{
-			MethodName: "GetBatchEmails",
-			Handler:    _MailyService_GetBatchEmails_Handler,
+			MethodName: "GetAll",
+			Handler:    _Manage_GetAll_Handler,
+		},
+		{
+			MethodName: "GetAllSubscribed",
+			Handler:    _Manage_GetAllSubscribed_Handler,
+		},
+		{
+			MethodName: "GetBatchSubscribed",
+			Handler:    _Manage_GetBatchSubscribed_Handler,
+		},
+		{
+			MethodName: "GetBatch",
+			Handler:    _Manage_GetBatch_Handler,
 		},
 		{
 			MethodName: "UpdateEmail",
-			Handler:    _MailyService_UpdateEmail_Handler,
+			Handler:    _Manage_UpdateEmail_Handler,
 		},
 		{
 			MethodName: "DeleteEmail",
-			Handler:    _MailyService_DeleteEmail_Handler,
+			Handler:    _Manage_DeleteEmail_Handler,
+		},
+		{
+			MethodName: "DeleteUnsubscribed",
+			Handler:    _Manage_DeleteUnsubscribed_Handler,
+		},
+		{
+			MethodName: "DeleteUsubscribedBefore",
+			Handler:    _Manage_DeleteUsubscribedBefore_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

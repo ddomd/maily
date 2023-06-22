@@ -6,8 +6,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/ddomd/maily/api"
-	"github.com/ddomd/maily/grpcapi"
+	"github.com/ddomd/maily/internal/api"
+	"github.com/ddomd/maily/internal/grpcapi"
 	"github.com/ddomd/maily/internal/mdb"
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
@@ -26,6 +26,7 @@ func main() {
 	defer db.Close()
 
 	mdb := mdb.NewMdb(db)
+	mdb.TryInitialize()
 
 	jsonPort := os.Getenv("JSON_PORT")
 	grpcPort := os.Getenv("GRPC_PORT")
@@ -33,21 +34,21 @@ func main() {
 	restServer := api.NewServer(jsonPort, mdb)
 	grpcServer := grpcapi.NewServer(grpcPort, mdb)
 
-	var wg sync.WaitGroup
+	var servers sync.WaitGroup
 
-	wg.Add(1)
+	servers.Add(1)
 	go func() {
 		log.Printf("Starting GRPC server on port %s...\n", grpcServer.Port)
 		grpcServer.Serve()
-		wg.Done()
+		servers.Done()
 	}()
 
-	wg.Add(1)
+	servers.Add(1)
 	go func() {
 		log.Printf("Starting REST server on port %s...\n", restServer.Port)
 		restServer.Serve()
-		wg.Done()
+		servers.Done()
 	}()
 
-	wg.Wait()
+	servers.Wait()
 }

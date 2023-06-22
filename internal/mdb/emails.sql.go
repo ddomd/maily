@@ -39,7 +39,84 @@ func (mdb *MDB) GetEmail(id int64) (Email, error) {
 	return foundEmail, nil
 }
 
+func (mdb *MDB) GetAllEmails() ([]Email, error){
+	emails := make([]Email, 0)
+
+	emailRows, err := mdb.DB.Query(`
+		SELECT * FROM emails
+		ORDER BY id ASC;
+	`)
+	if err != nil {
+		return nil, err
+	}
+
+	defer emailRows.Close()
+
+	for emailRows.Next() {
+		email, err := scanRows(emailRows)
+		if err != nil {
+			return nil, err
+		}
+
+		emails = append(emails, email)
+	}
+
+	return emails, nil
+}
+
+func (mdb *MDB) GetAllSubscribed() ([]Email, error){
+	emails := make([]Email, 0)
+
+	emailRows, err := mdb.DB.Query(`
+		SELECT * FROM emails
+		WHERE opt_out=false
+		ORDER BY id ASC;
+	`)
+	if err != nil {
+		return nil, err
+	}
+
+	defer emailRows.Close()
+
+	for emailRows.Next() {
+		email, err := scanRows(emailRows)
+		if err != nil {
+			return nil, err
+		}
+
+		emails = append(emails, email)
+	}
+
+	return emails, nil
+}
+
 func (mdb *MDB) GetBatchEmails(params BatchParams) ([]Email, error) {
+	emails := make([]Email, 0)
+
+	emailRows, err := mdb.DB.Query(`
+		SELECT * FROM emails
+		ORDER BY id ASC
+		LIMIT ? OFFSET ?;
+	`, params.Limit, (params.Offset-1)*params.Limit)
+	if err != nil {
+		return nil, err
+	}
+
+	defer emailRows.Close()
+
+	for emailRows.Next() {
+		email, err := scanRows(emailRows)
+		if err != nil {
+			return nil, err
+		}
+
+		emails = append(emails, email)
+	}
+
+	return emails, nil
+}
+
+func (mdb *MDB) GetBatchSubscribed(params BatchParams) ([]Email, error) {
 	emails := make([]Email, 0)
 
 	emailRows, err := mdb.DB.Query(`
@@ -100,7 +177,61 @@ func (mdb *MDB) DeleteEmail(id int64) (Email, error) {
 	return deletedEmail, nil
 }
 
-func (mdb *MDB) CreateEmailTable() {
+func (mdb *MDB) DeleteUnsubscribed() ([]Email, error) {
+	emails := []Email{}
+
+	result, err := mdb.DB.Query(`
+		DELETE FROM emails
+		WHERE opt_out=true
+		RETURNING *;
+	`)
+	if err != nil {
+		return nil, err
+	}
+
+	defer result.Close()
+
+	for result.Next() {
+		email, err := scanRows(result)
+		if err != nil {
+			return nil, err
+		}
+
+		emails = append(emails, email)
+	}
+
+	return emails, nil
+}
+
+func (mdb *MDB) DeleteUnsubscribedBefore(unixTime int64) ([]Email, error) {
+	emails := []Email{}
+
+	result, err := mdb.DB.Query(`
+		DELETE FROM emails
+		WHERE opt_out=true
+		AND confirmed_at < ?
+		RETURNING *;
+	`, unixTime)
+	if err != nil {
+		return nil, err
+	}
+
+	defer result.Close()
+
+	for result.Next() {
+		email, err := scanRows(result)
+		if err != nil {
+			return nil, err
+		}
+
+		emails = append(emails, email)
+	}
+
+	return emails, nil
+}
+
+
+func (mdb *MDB) createEmailTable() {
 	_, err := mdb.DB.Exec(`
 		CREATE TABLE IF NOT EXISTS emails (
 			id INTEGER   PRIMARY KEY,

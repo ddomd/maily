@@ -11,7 +11,7 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedMailyServiceServer
+	pb.UnimplementedManageServer
 	Port string
 	DB   *mdb.MDB
 }
@@ -30,7 +30,7 @@ func (cfg *Server) Serve() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterMailyServiceServer(grpcServer, cfg)
+	pb.RegisterManageServer(grpcServer, cfg)
 	reflection.Register(grpcServer)
 	log.Fatal(grpcServer.Serve(lis))
 }
