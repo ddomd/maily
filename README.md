@@ -2,8 +2,6 @@
 
 A GRPC/REST mailing list management micorservice.
 
-<br>
-
 ## Description
 
 Maily was created as a simple project to learn more about google's GRPC protocol implementation.
@@ -25,7 +23,6 @@ DBPATH="/path/to/db"
 | METHOD | ROUTE                                              | JSON PAYLOAD                               | ACTION                                                                      |
 | ------ | -------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------- |
 | GET    | /rest/get/{id}                                     | {}                                         | Returns a single email entry                                                |
-| ------ | -------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------- |
 | GET    | /rest/all                                          | {}                                         | Returns all email entries                                                   |
 | GET    | /rest/subs                                         | {}                                         | Returns all subscribed email entries                                        |
 | GET    | /rest/batch/limit={int}&offset={int}               | {}                                         | Returns a batch of email entries                                            |
