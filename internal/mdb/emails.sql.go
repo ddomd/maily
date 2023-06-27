@@ -90,6 +90,11 @@ func (mdb *MDB) GetAllSubscribed() ([]Email, error){
 }
 
 func (mdb *MDB) GetBatchEmails(params BatchParams) ([]Email, error) {
+	err := checkParams(params)
+	if err != nil {
+		return nil, err
+	}
+
 	emails := make([]Email, 0)
 
 	emailRows, err := mdb.DB.Query(`
@@ -116,6 +121,11 @@ func (mdb *MDB) GetBatchEmails(params BatchParams) ([]Email, error) {
 }
 
 func (mdb *MDB) GetBatchSubscribed(params BatchParams) ([]Email, error) {
+	err := checkParams(params)
+	if err != nil {
+		return nil, err
+	}
+
 	emails := make([]Email, 0)
 
 	emailRows, err := mdb.DB.Query(`

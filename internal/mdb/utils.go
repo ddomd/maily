@@ -2,6 +2,7 @@ package mdb
 
 import (
 	"database/sql"
+	"errors"
 	"time"
 )
 
@@ -33,4 +34,11 @@ func scanRow(row *sql.Row) (Email, error) {
 	email.ConfirmedAt = confirmedTime
 
 	return email, nil
+}
+
+func checkParams(params BatchParams) error {
+	if params.Offset <= 0 || params.Limit <= 0 {
+		return errors.New("Invalid param range")
+	}
+	return  nil
 }
